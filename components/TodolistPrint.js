@@ -42,8 +42,26 @@ const Todolistprint = (props) => {
         console.log(err)
       })
   };
+
+  
   const deleteTodoHandler = () => {
-    storectx.removeTodo(props.id);
+    fetch(
+      `https://nextjs-todo-54be6-default-rtdb.firebaseio.com/today/pendingtodo/${props.id}.json`,
+      {
+        method: "DELETE",
+
+        headers: { "content-type": "application/json" },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((response) => {
+      storectx.removeTodo(props.id);
+      });
+    
   };
 
   console.log(storectx.Completed);
