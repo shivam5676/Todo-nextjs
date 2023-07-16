@@ -38,11 +38,16 @@ const initialState = { allItems: [], completeItems: [] };
 const StoreContextProvider = (props) => {
   const [state, dispatch] = useReducer(reducerFn, initialState);
   const addItemHandler = (data) => {
-    console.log("context executed");
+    const itempresent=state.allItems.find((current)=>current.id==data.id)
+    
+    if(!itempresent){
+      
     dispatch({
       type: "add",
       payload: data,
     });
+    }
+    
   };
   const completeItemHandler = (item) => {
     dispatch({ type: "complete", payload: item });
@@ -57,7 +62,7 @@ const StoreContextProvider = (props) => {
     AllTodo: state.allItems,
     Completed:state.completeItems
   };
-  console.log(state);
+  
   return (
     <Storecontext.Provider value={contextHelper}>
       {props.children}
